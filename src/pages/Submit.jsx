@@ -102,7 +102,7 @@ export default function Submit() {
       <main className="max-w-xl mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-slate-900 mb-1">Submit a survey</h1>
-          <p className="text-slate-500 text-sm">Your survey will be reviewed by an admin before going live.</p>
+          <p className="text-slate-500 text-sm">Make your civic voice heard — your survey will be reviewed before going live.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">

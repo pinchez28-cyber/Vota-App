@@ -19,9 +19,12 @@ export default function Navbar() {
     <>
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 font-semibold text-slate-900">
-            <span className="text-blue-700 text-xl">🗳</span>
-            <span>Civic Voice</span>
+          <Link to="/" className="flex items-center gap-2 text-slate-900">
+            <span className="text-xl">🗳</span>
+            <div className="flex flex-col leading-tight">
+              <span className="font-bold text-base text-blue-700">VotaApp</span>
+              <span className="text-xs text-slate-400 font-medium">Your Civic Voice</span>
+            </div>
           </Link>
 
           {/* Desktop nav */}

@@ -41,7 +41,7 @@ export default function AuthModal({ onClose }) {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900">Sign in to vote</h2>
-                <p className="text-sm text-slate-500 mt-0.5">No password needed — we'll email you a link.</p>
+                <p className="text-sm text-slate-500 mt-0.5">Exercise your civic voice — no password needed.</p>
               </div>
               <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-xl leading-none">×</button>
             </div>

@@ -67,9 +67,12 @@ export default function Home() {
       <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Hero */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Your community, your voice</h1>
+            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+            🗳 Your Civic Voice
+          </div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Your community, your vote</h1>
           <p className="text-slate-500 text-base max-w-lg mx-auto">
-            Vote on local surveys and see where your community stands in real time.
+            Exercise your civic duty — vote on local surveys and see where your community stands in real time.
           </p>
         </div>
 
