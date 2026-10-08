@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Submit from './pages/Submit'
 import Admin from './pages/Admin'
+import Analytics from './pages/Analytics'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/submit" element={<Submit />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/analytics" element={<Analytics />} />
           </Routes>
         </div>
       </BrowserRouter>

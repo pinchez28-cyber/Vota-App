@@ -1,71 +1,66 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import AuthModal from './AuthModal'
 
-export default function Navbar() {
+export default function Navbar({ onAuthClick }) {
   const { session, profile, signOut } = useAuth()
-  const [showAuth, setShowAuth] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const navLinks = [
     { to: '/', label: 'Surveys' },
-    { to: '/submit', label: 'Submit a survey' },
-    ...(profile?.role === 'admin' ? [{ to: '/admin', label: 'Admin' }] : []),
+    { to: '/submit', label: 'Submit' },
+    ...(profile?.role === 'admin' ? [{ to: '/admin', label: 'Admin' }, { to: '/admin/analytics', label: 'Analytics' }] : []),
   ]
 
   return (
-    <>
-      <nav className="bg-white border-b border-slate-200 sticky top-0 z-40">
-        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-slate-900">
-            <span className="text-xl">🗳</span>
-            <div className="flex flex-col leading-tight">
-              <span className="font-bold text-base text-blue-700">VotaApp</span>
-              <span className="text-xs text-slate-400 font-medium">Your Civic Voice</span>
-            </div>
-          </Link>
+    <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+      <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
+        {/* Brand */}
+        <Link to="/" className="flex flex-col leading-tight">
+          <span className="font-bold text-blue-700 text-lg tracking-tight">VotaApp</span>
+          <span className="text-xs text-slate-400 -mt-0.5">Your Civic Voice</span>
+        </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden sm:flex items-center gap-6">
-            {navLinks.map(l => (
-              <Link
-                key={l.to}
-                to={l.to}
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === l.to
-                    ? 'text-blue-700'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {l.label}
-              </Link>
-            ))}
-            {session ? (
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-slate-500">{profile?.display_name}</span>
-                <button
-                  onClick={signOut}
-                  className="text-sm text-slate-600 hover:text-slate-900 border border-slate-200 rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-50"
-                >
-                  Sign out
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setShowAuth(true)}
-                className="text-sm font-medium bg-blue-700 text-white rounded-lg px-4 py-1.5 hover:bg-blue-800 transition-colors"
-              >
-                Sign in
-              </button>
-            )}
-          </div>
+        {/* Desktop nav */}
+        <div className="hidden sm:flex items-center gap-1">
+          {navLinks.map(link => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                location.pathname === link.to
+                  ? 'bg-blue-50 text-blue-700'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
 
-          {/* Mobile menu button */}
+        {/* Auth */}
+        <div className="flex items-center gap-2">
+          {session ? (
+            <button
+              onClick={signOut}
+              className="text-sm text-slate-500 hover:text-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
+            >
+              Sign out
+            </button>
+          ) : (
+            <button
+              onClick={onAuthClick}
+              className="text-sm bg-blue-700 text-white px-3 py-1.5 rounded-lg hover:bg-blue-800 transition-colors font-medium"
+            >
+              Sign in
+            </button>
+          )}
+
+          {/* Mobile menu toggle */}
           <button
-            className="sm:hidden text-slate-600 hover:text-slate-900"
-            onClick={() => setMenuOpen(!menuOpen)}
+            className="sm:hidden p-1.5 rounded-lg text-slate-500 hover:bg-slate-50"
+            onClick={() => setMenuOpen(o => !o)}
             aria-label="Toggle menu"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,27 +71,27 @@ export default function Navbar() {
             </svg>
           </button>
         </div>
+      </div>
 
-        {/* Mobile dropdown */}
-        {menuOpen && (
-          <div className="sm:hidden border-t border-slate-100 bg-white px-4 py-3 flex flex-col gap-3">
-            {navLinks.map(l => (
-              <Link key={l.to} to={l.to} className="text-sm text-slate-700" onClick={() => setMenuOpen(false)}>
-                {l.label}
-              </Link>
-            ))}
-            {session ? (
-              <button onClick={signOut} className="text-sm text-left text-slate-600">Sign out</button>
-            ) : (
-              <button onClick={() => { setShowAuth(true); setMenuOpen(false) }} className="text-sm text-blue-700 font-medium text-left">
-                Sign in
-              </button>
-            )}
-          </div>
-        )}
-      </nav>
-
-      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
-    </>
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="sm:hidden border-t border-slate-100 bg-white px-4 py-2 flex flex-col gap-1">
+          {navLinks.map(link => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setMenuOpen(false)}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                location.pathname === link.to
+                  ? 'bg-blue-50 text-blue-700'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </nav>
   )
 }
